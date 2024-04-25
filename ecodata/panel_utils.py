@@ -4,6 +4,7 @@ import functools
 import inspect
 import logging
 import os
+import re
 import shlex
 import shutil
 import subprocess
@@ -146,11 +147,74 @@ def sanitize_filepath(filepath: str):
     return str(Path(filepath).absolute().resolve())
 
 
-def make_mp4_from_frames(frames_dir, output_file, frame_rate):
+def make_mp4_from_frames(frames_dir, output_file, frame_rate, start_frame=None, end_frame=None):
+    """
+    Create an MP4 file from a sequence of frames stored in a directory using ffmpeg.
+
+    This function generates a video file in MP4 format by combining image frames
+    following a the naming pattern 'Frame<number>.png' (e.g., Frame1.png, Frame2.png, ...).
+    It allows for specifying a range of frames to include through start_frame and end_frame.
+    The output video's frame rate can also be defined.
+
+    Parameters
+    ----------
+    frames_dir : str or Path
+        The directory containing the frame images.
+    output_file : str or Path
+        The path (including filename) for the generated MP4 file. If a relative path is given,
+        it is considered relative to `frames_dir`.
+    frame_rate : int
+        The frame rate (frames per second) of the output video.
+    start_frame : int, optional
+        The first frame number to include in the video. If None (default), the video will start
+        from the first frame found in `frames_dir`.
+    end_frame : int, optional
+        The last frame number to include in the video. If None (default), the video will include
+        all frames up to the last one found in `frames_dir`.
+
+    Returns
+    -------
+    output_file : Path
+        The path to the created MP4 file.
+
+    Raises
+    ------
+    ValueError
+        If no frames matching the file pattern are found in `frames_dir`.
+
+    Notes
+    -----
+    This function requires ffmpeg to be installed and accessible in the system's PATH.
+    The frame images must be named with the pattern 'Frame<number>.png', where <number>
+    is a zero-padded integer (e.g., Frame001.png, Frame002.png, ...).
+
+    Examples
+    --------
+    Create an MP4 video from all frames in the directory './frames' at 24 frames per second:
+
+    >>> make_mp4_from_frames('./frames', 'output_video.mp4', 24)
+
+    Create an MP4 video using frames from 10 to 50 in the directory './frames' at 30 fps:
+
+    >>> make_mp4_from_frames('./frames', 'output_video.mp4', 30, start_frame=10, end_frame=50)
+    """
+
     frames_pattern = "Frame%d.png"
     temp_output_file = "output.mp4"
 
     frames_dir_sanitized = Path(frames_dir).absolute().resolve()
+
+    frames = list(sorted(frames_dir_sanitized.glob("Frame*.png")))
+    print(f"Found {len(frames)} frames in {frames_dir_sanitized}")
+    if not frames:
+        raise ValueError(f"No frames with file pattern {frames_pattern} found in {frames_dir_sanitized}")
+
+    if start_frame is None:
+        start_frame = int(re.search(r"Frame(\d+)", str(frames[0].stem)).group(1))
+    if end_frame is None:
+        n_frames = len(frames)
+    else:
+        n_frames = end_frame - start_frame + 1
 
     if Path(output_file).root == "":
         output_file = frames_dir_sanitized / output_file
@@ -161,9 +225,9 @@ def make_mp4_from_frames(frames_dir, output_file, frame_rate):
         print("Moving to frames directory...")
         os.chdir(frames_dir_sanitized)
         print(f"In directory: {os.getcwd()}")
-        cmd = f"""ffmpeg -framerate {frame_rate} -i {frames_pattern}
-        -vf pad='width=ceil(iw/2)*2:height=ceil(ih/2)*2'
-        -c:v libx264 -pix_fmt yuv420p -y {temp_output_file} """
+        cmd = f"""ffmpeg -start_number {start_frame} -framerate {frame_rate} -i {frames_pattern} -frames:v {n_frames}
+        -vf pad='width=ceil(iw/2)*2:height=ceil(ih/2)*2' -c:v libx265 -pix_fmt yuv420p -tag:v hvc1
+        -y {temp_output_file}"""
 
         subprocess.run(split_shell_command(cmd))
         print("ffmpeg done!")
