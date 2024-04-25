@@ -2,7 +2,7 @@
 
 ## Overview
 
-ECODATA-Prepare is a set of Python-based apps to access and process remote sensing and other environmental data products and prepare them for further use along with animal movement data. ECODATA-Prepare is designed to be along with the [ECODATA-Animate](https://ecodata-animate.readthedocs.io/en/latest/) tool to create movies of animal movement data, and can also be used to create input to resource, habitat and step selection models. Development is supported by MathWorks® and the NASA Earth Science Division, Ecological Forecasting Program, as part of [Room to Roam: Y2Y Wildlife Movements](https://ceg.osu.edu/Y2Y_Room2Roam) project.
+ECODATA-Prepare is a set of Python-based apps to access and process remote sensing and other environmental data products and prepare them for further use along with animal movement data. ECODATA-Prepare is designed to be used along with the [ECODATA-Animate](https://ecodata-animate.readthedocs.io/en/latest/) tool to create customized movies of animal movement data, and can also be used to prepare input to resource, habitat and step selection models. Development is supported by MathWorks® and the NASA Earth Science Division, Ecological Forecasting Program, as part of [Room to Roam: Y2Y Wildlife Movements](https://ceg.osu.edu/Y2Y_Room2Roam) project.
 
 Within ECODATA-Prepare,
 
@@ -14,15 +14,11 @@ Within ECODATA-Prepare,
 
 - The [**Movie Maker App**](user_guide/movie_maker) produces an animation file out of a stack of static maps which were produced by the ECODATA-Animate program.
 
-We recommend the following workflow (you can skip any steps you don't need):
-1. Use the [Tracks Explorer App](user_guide/tracks_explorer) to create a .geojson file that defines the area of interest based on your tracking data.
-2. Use this file to [request environmental data from NASA AppEEARS](request-nasa-data) to use in subsequent animations or analysis.
-3. Use the [Gridded Data Explorer App](user_guide/gridded_data_explorer) to review and further process the environmental data received from NASA AppEEARS.
-4. Use the [Subsetter App](user_guide/subsetter) to extract relevant features from very large datasets (for example, global vector GIS data products for features like roads, water bodies or protected areas) to use in subsequent animations or analysis.
-5. Use [ECODATA-Animate](https://ecodata-animate.readthedocs.io/en/latest/) to combine your tracking data, environmental data, subsetted vector layers, and other information, configure viewing options, and create a set of images to use as frames for an animation or for further exploration and analysis.
-6. Use the [Movie Maker App](user_guide/movie_maker) to create an animation from the output of ECODATA-Animate.
+[Read our overview](https://www.movebank.org/cms/movebank-content/ecodata#how_to_use_ecodata) of how to use Movebank, MoveApps, ECODATA-Animate and ECODATA-Prepare to discover and process tracking data, remote sensing data, shapefiles and other layers to create custom visualizations and input for ecological analysis. To try the software before working with your own data, see [our example](https://www.movebank.org/cms/movebank-content/ecodata#example_ecodata_animation) based on publicly-available data sources.
 
 For help, [submit a GitHub issue](https://ecodata-apps.readthedocs.io/en/latest/support.html) or contact support@movebank.org.
+
+![ecodata_workflow](https://www.movebank.org/cms/serve/images/ecodata_workflow.png)
 
 ## Python package
 

@@ -2,21 +2,14 @@
 
 ## Installers
 
-[Download installers for the latest release here](https://github.com/jemissik/ecodata/releases/latest), available for Mac, Windows, and Linux. You can also see all releases (including previous versions and pre-releases)
-[here](https://github.com/jemissik/ecodata/releases/).
+<a href="https://github.com/jemissik/ecodata/releases/latest" target="_blank">Download installers for the latest release here</a>, available for Mac, Windows, and Linux. You can also see all releases (including previous versions and pre-releases) <a href="https://github.com/jemissik/ecodata/releases/" target="_blank">here</a>.
 
 1. Download the correct installer for your operating system. For Mac, both graphical (.pkg) and command line (.sh) installers are available.
-2. Run the installer and follow the prompts. You can change the default installation location if you wish. This
-installation location is where the program files will be installed (i.e., files not intended to be accessed by the user
-after installation). If you have a previous version already installed in the default location, you will need to install
-the new version in a different location, or remove the previous version before installing the new version.
-3. A file used to launch the apps (``ecodata.command`` for Mac and ``ecodata.bat`` for Windows) will be copied to your
-Downloads folder. You can move this file to a convenient location after the installer is finished running.
-4. Double-click the ``ecodata.command`` or ``ecodata.bat`` file to launch the apps. A terminal will open indicating that the apps are launching. A window will open on your default web browser, showing
-the main app gallery page (the apps are running locally at ``localhost:5006``). There may be a short wait the first time
-you launch the apps, or the first time you launch after an update.
-5. You may receive a message "Do you want the application "python3.9" to accept incoming network connections?" You can click Allow.
-6. Keep the terminal application you used to launch the program open while running the app. To shut down the apps, close the terminal that you used for launching.
+2. Run the installer and follow the prompts. You can change the default installation location if you wish. This installation location is where the program files will be installed (i.e., files not intended to be accessed by the user after installation). If you have a previous version already installed in the default location, you will need to install the new version in a different location, or remove the previous version before installing the new version.  
+If opening the .pkg in Mac, you might get a message that it "cannot be opened because it is from an unidentified developer". If this happens, you can right-click or press ``Control`` click on the application, and then select Open. You can then select Open to run the installer.
+3. A file used to launch the apps (``ecodata.command`` for Mac and ``ecodata.bat`` for Windows) will be copied to your Downloads folder. You can move this file to a convenient location after the installer is finished running.
+
+After the installation is complete, you can [get started](https://ecodata-apps.readthedocs.io/en/latest/user_guide/index.html#).
 
 ## Alternative installation methods
 
@@ -26,14 +19,14 @@ computer's security settings are preventing the installer from running), you can
 ### Install using Mamba (recommended)
 
 1. Download and install Mambaforge. [Download the installer here](https://github.com/conda-forge/miniforge#mambaforge)
-3. Open a terminal.
+2. Open a terminal.
 
     **Mac/Linux**: Run the commands from the built-in "Terminal" application, or any other terminal app.
 
     **Windows**: Run the commands from the Miniforge Prompt (this was installed by Mambaforge). You can find this by
     searching for "Miniforge Prompt" in the Start menu.
 
-4. Install ECODATA in a new conda environment:
+3. Install ECODATA in a new conda environment:
 
     ```bash
     mamba create -n eco ecodata -c conda-forge
@@ -62,23 +55,9 @@ computer's security settings are preventing the installer from running), you can
     stuck when it has been paused accidentally.
     ```
 
-### Launching ECODATA-Prepare from the terminal
+After the installation is complete, you can [get started](https://ecodata-apps.readthedocs.io/en/latest/user_guide/index.html#).
 
-Launch the ECODATA-Prepare apps using the command below. For **Mac/Linux**, you will run the command below from the built-in Mac “Terminal” application, or any other terminal app. For **Windows**, you will run the command using the Miniforge Prompt. If this is not already open, find it by searching for "Miniforge Prompt" in the start menu.
-
-```bash
-mamba activate eco
-python -m ecodata.app
-```
-
-A window will open on your default web browser, showing the main app gallery page (the apps are running locally at ``localhost:5006``). There may be a short wait the first time you launch the apps, or the first time you launch after an update.
-
-You may receive a message "Do you want the application "python3.9" to accept incoming network connections?" You can click Allow.
-
-Keep the terminal application you used to launch the program open while running the app. To shut down the apps, close the terminal that you used for launching.
-
-
-### Updating ECODATA-Prepare from the terminal
+## Updating ECODATA-Prepare from the terminal
 
 You can check which version of ecodata you have installed by running:
 
@@ -96,8 +75,9 @@ mamba activate eco
 mamba update ecodata
 ```
 
+After the update is complete, you can [get started](https://ecodata-apps.readthedocs.io/en/latest/user_guide/index.html#).
 
-### Install using Anaconda (alternative method)
+## Install using Anaconda (alternative method)
 
 See below for steps to install and run the ECODATA-Prepare apps. For **Mac/Linux**, you will run the commands below from the built-in Mac "Terminal" application, or any other terminal app. For **Windows**, you will install Anaconda and then run the commands below using the Anaconda Powershell Prompt. You can launch this by searching for "Anaconda Powershell" in the start menu, or by launching Anaconda Navigator and looking for "Powershell Prompt" in the home screen.
 
@@ -175,26 +155,4 @@ If your directory has many files, replace "ls" with "ls -lt" to sort files by th
     pip install git+https://github.com/jemissik/ecodata.git@main
     ```
 
-#### Launch in Windows
-
-- Open Anaconda PowerShell.
-- Copy-paste the below code into the prompt window, and press Enter:
-
-```bash
-conda activate eco
-python -m ecodata.app
-```
-
-#### Launch on Mac
-
-- Open Anaconda Navigator.
-- Navigate to "eco".
-
-![anaconda_navigator](./images/anaconda_navigator.png)
-
-- Hit the play button and select "Open Terminal".
-- A Terminal window will open. Enter the following and hit Return:
-
-```bash
-python -m ecodata.app
-```
+After the installation is complete, you can [get started](https://ecodata-apps.readthedocs.io/en/latest/user_guide/index.html#).
