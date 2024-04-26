@@ -1,16 +1,3 @@
-# ---
-# jupyter:
-#   jupytext:
-#     text_representation:
-#       extension: .py
-#       format_name: percent
-#       format_version: '1.3'
-#       jupytext_version: 1.14.0
-#   kernelspec:
-#     display_name: Python 3 (ipykernel)
-#     language: python
-#     name: python3
-# ---
 import logging
 from pathlib import Path
 
@@ -20,7 +7,6 @@ import panel as pn
 import param
 from panel.io.loading import start_loading_spinner, stop_loading_spinner
 
-# %% pycharm={"name": "#%%\n"}
 import ecodata as eco
 from ecodata.app.models import FileSelector
 from ecodata.panel_utils import param_widget, register_view, try_catch, rename_param_widgets
@@ -40,7 +26,15 @@ class Subsetter(param.Parameterized):
     )
     clip = param_widget(pn.widgets.Checkbox(name="Clip features", value=True, align="end"))
     output_file = param_widget(
-        pn.widgets.TextInput(placeholder="Choose an output file...", value="subset.shp", name="Output file")
+        pn.widgets.TextInput(
+            placeholder="Choose an output file...",
+            value=str(
+                (Path.home() / "Downloads/subset.shp").resolve()
+                if (Path.home() / "Downloads").exists()
+                else (Path.home() / "subset.shp").resolve()
+            ),
+            name="Output file",
+        )
     )
 
     # Subset type options
@@ -66,7 +60,7 @@ class Subsetter(param.Parameterized):
     )
 
     # Track file options
-    tracks_file = param_widget(pn.widgets.TextInput(placeholder="Select a file...", name="Track points file"))
+    tracks_file = param_widget(FileSelector(constrain_path=False, expanded=True))
     boundary_type_tracks = param_widget(
         pn.widgets.RadioBoxGroup(
             name="Boundary type", options={"Rectangular": "rectangular", "Convex hull": "convex_hull"}
@@ -74,9 +68,8 @@ class Subsetter(param.Parameterized):
     )
 
     # Bounding geom options
-    bounding_geom_file = param_widget(
-        pn.widgets.TextInput(placeholder="Select a file...", name="Bounding geometry file")
-    )
+    bounding_geom_file = param_widget(FileSelector(constrain_path=False, expanded=True))
+
     boundary_type_geom = param_widget(
         pn.widgets.RadioBoxGroup(
             name="Boundary type", options={"Rectangular": "rectangular", "Convex hull": "convex_hull", "Exact": "mask"}
