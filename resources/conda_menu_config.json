@@ -1,0 +1,42 @@
+{
+    "$schema": "https://json-schema.org/draft-07/schema",
+    "$id": "https://schemas.conda.io/menuinst-1.schema.json",
+    "menu_name": "ecodata (__PKG_VERSION__)",
+    "menu_items": [
+        {
+            "name": "ecodata (__PKG_VERSION__)",
+            "description": "A set of apps for processing and visualizing environmental and animal movement data.",
+            "icon": "{{ MENU_DIR }}/ecodata-icon.{{ ICON_EXT }}",
+            "precommand": "unset PYTHONHOME && unset PYTHONPATH",
+            "command": [
+                "{{ PYTHON }}",
+                "-m",
+                "ecodata.app"
+            ],
+            "activate": true,
+            "terminal": false,
+            "platforms": {
+                "win": {
+                    "precommand": "set \"PYTHONHOME=\" & set \"PYTHONPATH=\"",
+                    "desktop": true,
+                    "app_user_model_id": "ecodata.ecodata.app.__PKG_VERSION__"
+                },
+                "linux": {
+                    "Categories": [
+                        "Graphics",
+                        "Science"
+                    ]
+                },
+                "osx": {
+                    "link_in_bundle": {
+                        "{{ PREFIX }}/bin/python": "{{ MENU_ITEM_LOCATION }}/Contents/Resources/python"
+                    },
+                    "command": ["{{ MENU_ITEM_LOCATION }}/Contents/Resources/python", "-m", "ecodata.app"],
+                    "CFBundleName": "ECODATA",
+                    "CFBundleDisplayName": "ECODATA",
+                    "CFBundleVersion": "__PKG_VERSION__"
+                }
+            }
+        }
+    ]
+}
