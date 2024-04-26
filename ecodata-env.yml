@@ -1,8 +1,6 @@
 name: eco
 channels:
-- pyviz
 - conda-forge
-- defaults
 dependencies:
 - python=3.9
 - cartopy
@@ -17,13 +15,11 @@ dependencies:
 - cfgrib
 - rasterio
 - numpy<1.24  # numpy 1.24 is incompatible with numba
-- conda-forge::rioxarray
+- rioxarray
 - hvplot
 - panel>=1,<1.4
 - datashader
 - geoviews>=1.10
-- conda-forge::geocube
-- conda-forge::pyproj
-- conda-forge::ffmpeg
-- git
-- conda-forge::gdown<4.6  # gdown 4.6.something has a problem with our gdrive files
+- geocube
+- ffmpeg
+- gdown<4.6  # gdown 4.6.something has a problem with our gdrive files
