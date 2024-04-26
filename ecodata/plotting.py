@@ -70,7 +70,7 @@ def plot_gridded_time_slice(ds, timevar, zvar, time, lonvar='longitude',
 
 class GriddedPlotWithSlider(param.Parameterized):
     time_slider = param_widget(pn.widgets.DiscreteSlider(name="Datetime slider", align="center"))
-    fig = param.ClassSelector(class_=pn.pane.HoloViews, default=pn.pane.HoloViews(sizing_mode="stretch_both"))
+    fig = param.ClassSelector(class_=pn.pane.HoloViews, default=pn.pane.HoloViews())
 
     def __init__(self, ds, timevar, zvar, lonvar='longitude', latvar='latitude',
                  clim=None, width=500, **params):
@@ -96,7 +96,22 @@ class GriddedPlotWithSlider(param.Parameterized):
         self.fig.object = plot_gridded_time_slice(self.ds, self.timevar, self.zvar,
                                                   vals[0], clim=clim, width=self.width,
                                                   lonvar=self.lonvar, latvar=self.latvar)
-        self.fig_with_widget = pn.Column(self.fig, self.time_slider)
+
+        ds_ts_plot = plot_avg_timeseries(
+            self.ds,
+            x=self.lonvar,
+            y=self.latvar,
+            z=self.zvar,
+            time=self.timevar,
+        )
+
+        self.fig_with_widget = pn.Row(
+            self.fig,
+            pn.Column(
+                pn.panel(ds_ts_plot),
+                pn.panel(self.time_slider),
+            ),
+        )
 
 
     @param.depends("time_slider.value_throttled", watch=True)

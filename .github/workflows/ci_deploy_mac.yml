@@ -2,7 +2,6 @@ name: ci_deploy_mac
 on:
   pull_request:
     branches:
-      - develop
       - main
 
 jobs:

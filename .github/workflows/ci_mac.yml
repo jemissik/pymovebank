@@ -2,7 +2,6 @@ name: ci_mac
 on:
   pull_request:
     branches:
-      - develop
       - main
 
 jobs:

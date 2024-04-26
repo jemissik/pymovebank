@@ -43,7 +43,7 @@ class TracksExplorer(param.Parameterized):
             value=str(
                 (Path.home() / "Downloads/tracks_extent.geojson").resolve()
                 if (Path.home() / "Downloads").exists()
-                else (Path.cwd() / "tracks_extent.geojson").resolve()
+                else (Path.home() / "tracks_extent.geojson").resolve()
             ),
             name="Output file",
         )
