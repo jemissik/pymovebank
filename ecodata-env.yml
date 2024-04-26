@@ -19,7 +19,7 @@ dependencies:
 - numpy<1.24  # numpy 1.24 is incompatible with numba
 - conda-forge::rioxarray
 - hvplot
-- panel>=1
+- panel>=1,<1.4
 - datashader
 - geoviews>=1.10
 - conda-forge::geocube
