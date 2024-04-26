@@ -283,18 +283,14 @@ class GriddedDataExplorer(param.Parameterized):
             sizing_mode="stretch_width"
         )
 
-        self.plot_col = pn.Column()
+        self.plot_col = pn.Column(sizing_mode="stretch_both", name="Charts")
         self.ts_pane = pn.pane.HoloViews(sizing_mode="stretch_both")
-        self.ds_pane = pn.pane.HTML(sizing_mode="stretch_both", styles={"overflow": "auto"})
+        self.ds_pane = pn.pane.HTML(sizing_mode="stretch_both", styles={"overflow": "auto"}, name="Data")
         self.dashboard_pane = pn.pane.HTML(sizing_mode="stretch_both", styles={"overflow": "auto"})
 
         self.ts_widget = pn.pane.Markdown("")
-        # self.figs_with_widget = pn.layout.FloatPanel(
-        #     pn.Tabs(("Charts", self.plot_col), ("Data", self.ds_pane)),
-        #     name='Basic FloatPanel',
-        #     margin=20
-        # )
-        self.figs_with_widget = pn.Tabs(("Charts", self.plot_col), ("Data", self.ds_pane))
+
+        self.figs_with_widget = pn.Tabs()
 
         self.view_objects = {
             "file_input_card": 1,
@@ -510,15 +506,8 @@ class GriddedDataExplorer(param.Parameterized):
     def update_status_view(self):
         self.alert.object = self.status_text
 
-
     @try_catch()
-    @param.depends("ds", watch=True)
-    def update_dataset_view(self):
-        self.ds_pane.object = self.ds
-        self.figs_with_widget.__setitem__(1, self.ds_pane)
-
-    @try_catch()
-    @param.depends("update_varnames.value", "update_filters.value","disable_plotting_button.value", "poly", watch=True)
+    @param.depends("update_varnames.value", "update_filters.value","disable_plotting_button.value", "poly", "ds", watch=True)
     def update_plot_view(self):
         # self.ds_pane.object = self.ds
         # if self.disable_plotting_button.value:
@@ -535,21 +524,29 @@ class GriddedDataExplorer(param.Parameterized):
             if self.poly is not None:
                 ds_plot.fig.object = ds_plot.fig.object * gv.Path(self.poly).opts(line_color="k", line_width=2)
 
-            ds_ts_plot = plot_avg_timeseries(
-                self.ds.reindex_like(self.ds_raw),
-                x=self.lonvar.value,
-                y=self.latvar.value,
-                z=self.zvar.value,
-                time=self.timevar.value,
-            )
-            self.plot_col.objects = [ds_plot.fig_with_widget, ds_ts_plot]
+            self.plot_col[:] = [
+                ds_plot.fig_with_widget
+            ]
 
-            # self.figs_with_widget[:] = [
-            #     ("Charts", self.plot_col),
-            #     ("Data", self.ds_pane),
-            # ]
-            self.figs_with_widget.__setitem__(0, self.plot_col)
-
+            self.ds_pane.object = self.ds
+            if len(self.figs_with_widget.objects) == 0:
+                self.figs_with_widget.append(self.plot_col)
+                self.figs_with_widget.append(self.ds_pane)
+            else:
+                self.figs_with_widget.objects[:] = [
+                    self.plot_col,
+                    self.ds_pane
+                ]
+            # Setup Tabs
+            # if an wierd thing happens to get too many Tabs, wipe the list and start over
+            # if len(self.figs_with_widget.objects) > 2:
+            #     self.figs_with_widget.objects[:] = []
+            # if len(self.figs_with_widget.objects) == 1:
+            #     self.figs_with_widget.objects[0] = self.plot_col
+            #
+            # if len(self.figs_with_widget.objects) == 0:
+            #     self.figs_with_widget.append(self.plot_col)
+            # self.figs_with_widget.append(self.ds_pane)
 
             self.status_text = "Plot created!"
 
