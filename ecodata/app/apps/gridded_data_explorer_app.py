@@ -507,7 +507,7 @@ class GriddedDataExplorer(param.Parameterized):
         self.alert.object = self.status_text
 
     @try_catch()
-    @param.depends("update_varnames.value", "update_filters.value","disable_plotting_button.value", "poly", watch=True)
+    @param.depends("update_varnames.value", "update_filters.value","disable_plotting_button.value", "poly", "ds", watch=True)
     def update_plot_view(self):
         # self.ds_pane.object = self.ds
         # if self.disable_plotting_button.value:
