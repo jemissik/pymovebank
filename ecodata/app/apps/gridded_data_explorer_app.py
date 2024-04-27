@@ -148,7 +148,15 @@ class GriddedDataExplorer(param.Parameterized):
 
     # Save dataset
     output_fname = param_widget(
-        pn.widgets.TextInput(placeholder="Output filename...", value="processed_dataset.nc", name="Output file")
+        pn.widgets.TextInput(
+            placeholder="Output filename...",
+            value=str(
+                (Path.home() / "Downloads/processed_dataset.nc").resolve()
+                if (Path.home() / "Downloads").exists()
+                else (Path.home() / "processed_dataset.nc").resolve()
+            ),
+            name="Output file",
+        )
     )
     save_ds = param_widget(
         pn.widgets.Button(name="Save dataset", button_type="primary")
