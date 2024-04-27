@@ -73,7 +73,7 @@ class GriddedDataExplorer(param.Parameterized):
     zvar = param_widget(pn.widgets.Select(options=[], name="Variable of interest"))
     vars_to_save = param_widget(pn.widgets.MultiChoice(options=[], name='Variables to save', sizing_mode='fixed'))
     update_varnames = param_widget(
-        pn.widgets.Button(button_type="primary", name="Update variable names")
+        pn.widgets.Button(button_type="primary", name="Update plot")
     )
     disable_plotting_button = param_widget(
         pn.widgets.Toggle(button_type="primary", name="Disable plotting")
@@ -506,8 +506,14 @@ class GriddedDataExplorer(param.Parameterized):
     def update_status_view(self):
         self.alert.object = self.status_text
 
+
     @try_catch()
-    @param.depends("update_varnames.value", "update_filters.value","disable_plotting_button.value", "poly", "ds", watch=True)
+    @param.depends("ds", watch=True)
+    def update_dataset_view(self):
+        self.ds_pane.object = self.ds
+
+    @try_catch()
+    @param.depends("update_varnames.value", "update_filters.value","disable_plotting_button.value", "poly", watch=True)
     def update_plot_view(self):
         # self.ds_pane.object = self.ds
         # if self.disable_plotting_button.value:
@@ -528,25 +534,16 @@ class GriddedDataExplorer(param.Parameterized):
                 ds_plot.fig_with_widget
             ]
 
-            self.ds_pane.object = self.ds
+            # Setup Tabs
             if len(self.figs_with_widget.objects) == 0:
                 self.figs_with_widget.append(self.plot_col)
                 self.figs_with_widget.append(self.ds_pane)
             else:
+                # self.figs_with_widget.objects[0] = self.plot_col
                 self.figs_with_widget.objects[:] = [
                     self.plot_col,
                     self.ds_pane
                 ]
-            # Setup Tabs
-            # if an wierd thing happens to get too many Tabs, wipe the list and start over
-            # if len(self.figs_with_widget.objects) > 2:
-            #     self.figs_with_widget.objects[:] = []
-            # if len(self.figs_with_widget.objects) == 1:
-            #     self.figs_with_widget.objects[0] = self.plot_col
-            #
-            # if len(self.figs_with_widget.objects) == 0:
-            #     self.figs_with_widget.append(self.plot_col)
-            # self.figs_with_widget.append(self.ds_pane)
 
             self.status_text = "Plot created!"
 
