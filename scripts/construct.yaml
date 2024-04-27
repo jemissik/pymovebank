@@ -13,6 +13,7 @@ channels:
   - https://conda.anaconda.org/conda-forge/
 
 specs:
-  - python 3.9.*
-  - conda 22.11.1
+  - python
+  - conda
+  - mamba
   - ecodata=={{ version }}
