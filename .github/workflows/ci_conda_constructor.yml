@@ -38,14 +38,17 @@ jobs:
                   miniforge-variant: Mambaforge
                   miniforge-version: latest
                   use-mamba: true
+                  activate-environment: constructor
 
             - name: Install constructor
+              shell: bash -l {0}
               run: |
-                conda create -n constructor -c conda-forge constructor coverage jinja2
+                conda install constructor -y
+                conda install -c conda-forge jinja2 -y
 
             - name: Run conda constructor
+              shell: bash -l {0}
               run: |
-                    conda activate constructor
                     cd scripts
                     bash build.sh
             - name: upload artifacts
