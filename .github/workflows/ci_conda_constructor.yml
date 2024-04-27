@@ -7,73 +7,29 @@ on:
         required: true
 
 jobs:
-    unixlike:
+    constructors:
         name: ${{ matrix.os }}
-        runs-on: ${{ matrix.os }}-latest
+        runs-on: ${{ matrix.os }}
         strategy:
             fail-fast: false
             matrix:
                 include:
-                    -   os: ubuntu
+                    # UBUNTU
+                    -   os: ubuntu-latest
                         ARCH: x86_64
                         OS_NAME: "Linux"
-
-                    -   os: macos
+                    # x86_64 MACOS
+                    -   os: macos-13
                         ARCH: x86_64
                         OS_NAME: "MacOSX"
-        env:
-            PYTHONUNBUFFERED: True
-        steps:
-            -   name: Print github context
-                run: |
-                    echo "EVENT_NAME:" "$GITHUB_EVENT_NAME"
-                    echo "       REF:" "$GITHUB_REF"
-                    echo "  HEAD_REF:" "$GITHUB_HEAD_REF"
-                    echo "  BASE_REF:" "$GITHUB_BASE_REF"
-                    echo "       SHA:" "$GITHUB_SHA"
-            -   name: Retrieve the source code
-                uses: actions/checkout@v3
-                with:
-                    fetch-depth: 0
-                    ref: ${{ github.event.pull_request.head.sha }}
-    #        -   name: Build the build environment
-    #            run: |
-    #                source $CONDA/etc/profile.d/conda.sh
-    #                [ $RUNNER_OS == macOS ] && export CONDA_PKGS_DIRS=~/.pkgs
-    #                conda create -p ../conda conda-build conda-verify
-            - name: Install constructor
-              run: |
-                source $CONDA/etc/profile.d/conda.sh
-                CONDA_BLD_PATH="${{ runner.temp }}/conda-bld" \
-                  conda create -n constructor -c conda-forge constructor coverage jinja2
-                conda activate constructor
-                constructor --version
-                constructor --help-construct
-
-            - name: Run examples and prepare artifacts
-              run: |
-                source $CONDA/etc/profile.d/conda.sh
-                conda activate constructor
-                cd scripts
-                bash build.sh
-
-            -   name: upload artifacts
-                uses: actions/upload-artifact@v3
-                with:
-                    path: scripts/ecodata*
-                    name: ecodata-${{ matrix.OS_NAME }}
-
-            -   name: Upload binaries to release
-                uses: svenstaro/upload-release-action@v2
-                with:
-                    repo_token: ${{ secrets.GITHUB_TOKEN }}
-                    file: scripts/ecodata*
-                    tag: ${{ inputs.tag }}
-                    overwrite: true
-                    file_glob: true
-
-    windows:
-        runs-on: windows-latest
+                    # ARM MACOS
+                    -   os: macos-latest
+                        ARCH: arm64
+                        OS_NAME: "MacOSX"
+                    # WINDOWS
+                    -   os: windows-latest
+                        ARCH: x86_64
+                        OS_NAME: "Windows"
         steps:
             - name: Checkout code
               uses: actions/checkout@v3
@@ -92,14 +48,19 @@ jobs:
 
             - name: Run conda constructor
               run: |
-                  cd scripts
-                  .\build.ps1
+                    if [[ "${{ matrix.OS_NAME }}" == "Windows" ]]; then
+                        cd scripts
+                         .\build.ps1
+                    else
+                        cd scripts
+                        bash build.sh
+                    fi
 
             - name: upload artifacts
               uses: actions/upload-artifact@v3
               with:
                 path: scripts/ecodata*
-                name: ecodata-Windows
+                name: ecodata-${{ matrix.OS_NAME }}
 
             -   name: Upload binaries to release
                 uses: svenstaro/upload-release-action@v2
