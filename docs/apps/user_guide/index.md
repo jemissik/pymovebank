@@ -6,13 +6,13 @@ Want a downloadable version of the docs? This documentation is also [available f
 
 ## Getting started
 
-ECODATA-Prepare is a set of four Python-based apps to read, process, and create animations from animal tracking data and gridded environmental data. [Read here](../index) for an overview and to learn how to install, contribute and get support. Before using this program, gather files you want to use with the app: this could include 
+ECODATA-Prepare is a set of four Python-based apps to read, process, and create animations from animal tracking data and gridded environmental data. [Read here](../index) for an overview and to learn how to install, contribute and get support. Before using this program, gather files you want to use with the app. This could include:
 * a .csv file of tracking data, in Movebank’s .csv format
-* NetCDF files of environmental data (you can [order these](https://ecodata-apps.readthedocs.io/en/latest/environmental_data.html) from NASA or ECMWF)
+* NetCDF files of environmental data (you can [order these](../environmental_data) from NASA or ECMWF)
 * shapefiles
 * a folder of sequentially-numbered .png files that are frames for an animation (you can create these with [ECODATA-Animate](https://ecodata-animate.readthedocs.io/en/latest/))
 
-If needed, see the [installation instructions](../installation) to install or update the program. 
+If needed, see the [installation instructions](../installation) to install or update the program.
 
 See [below](#opening-ecodata-prepare) for instructions to open the program. When it opens, it will display the main panel, showing the four apps. Click on an app to launch it. From there, you can navigate between apps within the interface, or switch between them by pasting these URLs in your browser window:
 
@@ -71,7 +71,7 @@ To launch on Mac,
 - Open Anaconda Navigator.
 - Select Environments from the upper left and navigate to "ecodata".
 
-![anaconda_navigator](./images/anaconda_navigator.png)
+![anaconda_navigator](../images/anaconda_navigator.png)
 
 - Hit the play button and select "Open Terminal".
 - A Terminal window will open. Enter the following and hit Return:

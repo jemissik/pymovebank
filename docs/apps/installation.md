@@ -5,11 +5,11 @@
 <a href="https://github.com/jemissik/ecodata/releases/latest" target="_blank">Download installers for the latest release here</a>, available for Mac, Windows, and Linux. You can also see all releases (including previous versions and pre-releases) <a href="https://github.com/jemissik/ecodata/releases/" target="_blank">here</a>.
 
 1. Download the correct installer for your operating system. For Mac, both graphical (.pkg) and command line (.sh) installers are available.
-2. Run the installer and follow the prompts. You can change the default installation location if you wish. This installation location is where the program files will be installed (i.e., files not intended to be accessed by the user after installation). If you have a previous version already installed in the default location, you will need to install the new version in a different location, or remove the previous version before installing the new version.  
+2. Run the installer and follow the prompts. You can change the default installation location if you wish. This installation location is where the program files will be installed (i.e., files not intended to be accessed by the user after installation). If you have a previous version already installed in the default location, you will need to install the new version in a different location, or remove the previous version before installing the new version.
 If opening the .pkg in Mac, you might get a message that it "cannot be opened because it is from an unidentified developer". If this happens, you can right-click or press ``Control`` click on the application, and then select Open. You can then select Open to run the installer.
 3. A file used to launch the apps (``ecodata.command`` for Mac and ``ecodata.bat`` for Windows) will be copied to your Downloads folder. You can move this file to a convenient location after the installer is finished running.
 
-After the installation is complete, you can [get started](https://ecodata-apps.readthedocs.io/en/latest/user_guide/index.html#).
+After the installation is complete, you can [get started](./user_guide/index).
 
 ## Alternative installation methods
 
@@ -55,7 +55,7 @@ computer's security settings are preventing the installer from running), you can
     stuck when it has been paused accidentally.
     ```
 
-After the installation is complete, you can [get started](https://ecodata-apps.readthedocs.io/en/latest/user_guide/index.html#).
+After the installation is complete, you can [get started](./user_guide/index).
 
 ## Updating ECODATA-Prepare from the terminal
 
@@ -75,7 +75,7 @@ mamba activate eco
 mamba update ecodata
 ```
 
-After the update is complete, you can [get started](https://ecodata-apps.readthedocs.io/en/latest/user_guide/index.html#).
+After the installation is complete, you can [get started](./user_guide/index).
 
 ## Install using Anaconda (alternative method)
 
