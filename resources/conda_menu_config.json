@@ -1,15 +1,15 @@
 {
     "$schema": "https://json-schema.org/draft-07/schema",
     "$id": "https://schemas.conda.io/menuinst-1.schema.json",
-    "menu_name": "ecodata (__PKG_VERSION__)",
+    "menu_name": "ECODATA (__PKG_VERSION__)",
     "menu_items": [
         {
-            "name": "ecodata (__PKG_VERSION__)",
+            "name": "ECODATA (__PKG_VERSION__)",
             "description": "A set of apps for processing and visualizing environmental and animal movement data.",
             "icon": "{{ MENU_DIR }}/ecodata-icon.{{ ICON_EXT }}",
             "precommand": "unset PYTHONHOME && unset PYTHONPATH",
             "command": [
-                "{{ PYTHON }}",
+                "python",
                 "-m",
                 "ecodata.app"
             ],
