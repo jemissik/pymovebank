@@ -30,6 +30,8 @@ jobs:
                     -   os: windows-latest
                         ARCH: x86_64
                         OS_NAME: "Windows"
+        env:
+            PYTHONUNBUFFERED: True
         steps:
             - name: Checkout code
               uses: actions/checkout@v3
