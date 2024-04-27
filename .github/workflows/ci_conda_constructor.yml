@@ -48,16 +48,16 @@ jobs:
                 conda install constructor -y
                 conda install -c conda-forge jinja2 -y
 
-            - name: Run conda constructor
+            - name: Run conda constructor with Windows
+              if: ${{ matrix.OS_NAME == "Windows" }}
               run: |
-                    if [[ "${{ matrix.OS_NAME }}" == "Windows" ]]; then
-                        cd scripts
-                         .\build.ps1
-                    else
-                        cd scripts
-                        bash build.sh
-                    fi
-
+                    cd scripts
+                    .\build.ps1
+            - name: Run conda constructor without Windows (Unix-like)
+              if: ${{ matrix.OS_NAME != "Windows" }}
+              run: |
+                    cd scripts
+                    bash build.sh
             - name: upload artifacts
               uses: actions/upload-artifact@v3
               with:
