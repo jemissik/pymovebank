@@ -41,11 +41,11 @@ jobs:
 
             - name: Install constructor
               run: |
-                conda install constructor -y
-                conda install -c conda-forge jinja2 -y
+                conda create -n constructor -c conda-forge constructor coverage jinja2
 
             - name: Run conda constructor
               run: |
+                    conda activate constructor
                     cd scripts
                     bash build.sh
             - name: upload artifacts
