@@ -7,7 +7,7 @@ on:
         required: true
 
 jobs:
-    constructors:
+    Unix-like:
         name: ${{ matrix.os }}
         runs-on: ${{ matrix.os }}
         strategy:
@@ -26,6 +26,50 @@ jobs:
                     -   os: macos-latest
                         ARCH: arm64
                         OS_NAME: "MacOSX"
+        env:
+            PYTHONUNBUFFERED: True
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v3
+
+            - name: Setup Mambaforge
+              uses: conda-incubator/setup-miniconda@v2
+              with:
+                  miniforge-variant: Mambaforge
+                  miniforge-version: latest
+                  use-mamba: true
+
+            - name: Install constructor
+              run: |
+                conda install constructor -y
+                conda install -c conda-forge jinja2 -y
+
+            - name: Run conda constructor
+              run: |
+                    cd scripts
+                    bash build.sh
+            - name: upload artifacts
+              uses: actions/upload-artifact@v3
+              with:
+                path: scripts/ecodata*
+                name: ecodata-${{ matrix.OS_NAME }}
+
+            -   name: Upload binaries to release
+                uses: svenstaro/upload-release-action@v2
+                with:
+                    repo_token: ${{ secrets.GITHUB_TOKEN }}
+                    file: scripts/ecodata*
+                    tag: ${{ inputs.tag }}
+                    overwrite: true
+                    file_glob: true
+
+    Windows:
+        name: ${{ matrix.os }}
+        runs-on: ${{ matrix.os }}
+        strategy:
+            fail-fast: false
+            matrix:
+                include:
                     # WINDOWS
                     -   os: windows-latest
                         ARCH: x86_64
@@ -48,16 +92,10 @@ jobs:
                 conda install constructor -y
                 conda install -c conda-forge jinja2 -y
 
-            - name: Run conda constructor with Windows
-              if: ${{ matrix.OS_NAME }} == "Windows"
+            - name: Run conda constructor
               run: |
                     cd scripts
                     .\build.ps1
-            - name: Run conda constructor without Windows (Unix-like)
-              if: ${{ matrix.OS_NAME }} != "Windows"
-              run: |
-                    cd scripts
-                    bash build.sh
             - name: upload artifacts
               uses: actions/upload-artifact@v3
               with:
