@@ -1,5 +1,6 @@
 # Installing the apps
 
+(installers)=
 ## Installers
 
 Download installers for the latest release:
@@ -21,28 +22,33 @@ If opening the .pkg in Mac, you might get a message that it "cannot be opened be
 
 After the installation is complete, you can [get started](./user_guide/index).
 
+(alternative-installation)=
 ## Alternative installation methods
 
 The apps can also be installed from the command line. If you have issues with the first installation method (e.g. your
 computer's security settings are preventing the installer from running), you can use this method as a backup.
 
-### Install using Mamba (recommended)
+### Install using conda (recommended)
+ECODATA is [available on conda-forge](https://anaconda.org/conda-forge/ecodata) and can be installed directly using conda. This method requires installing conda.
 
-1. Download and install Mambaforge. [Download the installer here](https://github.com/conda-forge/miniforge#mambaforge)
+#### Install ECODATA using conda
+1. Download and install Miniconda. [See instructions for installing Miniconda and download installers here](https://docs.anaconda.com/free/miniconda/index.html). If you already have conda installed, you can skip this step.
 2. Open a terminal.
 
     **Mac/Linux**: Run the commands from the built-in "Terminal" application, or any other terminal app.
 
-    **Windows**: Run the commands from the Miniforge Prompt (this was installed by Mambaforge). You can find this by
-    searching for "Miniforge Prompt" in the Start menu.
+    **Windows**: Run the commands from the Anaconda Powershell Prompt (this was installed by Miniconda). You can find this by
+    searching for "Anaconda Powershell Prompt" in the Start menu.
+
+    You can check that your conda installation was successful by running `conda list`. If conda has been installed correctly, a list of installed packages appears.
 
 3. Install ECODATA in a new conda environment:
 
     ```bash
-    mamba create -n eco ecodata -c conda-forge
+    conda create -n eco ecodata -c conda-forge
     ```
 
-    This will download all of the packages for the application, so it may take some time to finish, depending on your internet speed. Once the environment is successfully created, the terminal output should look something like:
+    This will install ECODATA in a new conda environment named "eco". This includes downloading all of the packages for the application, so it may take some time to finish, depending on your internet speed. Once the environment is successfully created, the terminal output should look something like:
 
     ```bash
     #
@@ -65,6 +71,27 @@ computer's security settings are preventing the installer from running), you can
     stuck when it has been paused accidentally.
     ```
 
+#### Launching ECODATA from the command line
+
+Launch the ECODATA-Prepare apps using the command below. For **Mac/Linux**, you will run the command below from the built-in Mac “Terminal” application, or any other terminal app. For **Windows**, you will run the command using the Anaconda Powershell Prompt. If this is not already open, find it by searching for "Anaconda Powershell" in the start menu.
+
+First, you need to activate the conda environment where ECODATA is installed:
+
+```bash
+conda activate eco
+```
+
+Next, launch the apps:
+```bash
+python -m ecodata.app
+```
+
+A window will open on your default web browser, showing the main app gallery page (the apps are running locally at ``localhost:5006``). There may be a short wait the first time you launch the apps, or the first time you launch after an update.
+
+You may receive a message "Do you want the application "python3.11" to accept incoming network connections?" You can click Allow.
+
+Keep the terminal application you used to launch the program open while running the app. To shut down the apps, close the terminal that you used for launching.
+
 After the installation is complete, you can [get started](./user_guide/index).
 
 ## Updating ECODATA-Prepare from the terminal
@@ -72,8 +99,8 @@ After the installation is complete, you can [get started](./user_guide/index).
 You can check which version of ecodata you have installed by running:
 
 ```bash
-mamba activate eco
-mamba list ecodata
+conda activate eco
+conda list ecodata
 ```
 
 You can see new releases on the [releases page](https://github.com/jemissik/ecodata/releases)
@@ -81,13 +108,13 @@ You can see new releases on the [releases page](https://github.com/jemissik/ecod
 If you want to install a new release, you can update your version of the apps by running the command below:
 
 ```bash
-mamba activate eco
-mamba update ecodata
+conda activate eco
+conda update ecodata
 ```
 
 After the installation is complete, you can [get started](./user_guide/index).
 
-## Install using Anaconda (alternative method)
+### Install using Anaconda (legacy method, not recommended)
 
 See below for steps to install and run the ECODATA-Prepare apps. For **Mac/Linux**, you will run the commands below from the built-in Mac "Terminal" application, or any other terminal app. For **Windows**, you will install Anaconda and then run the commands below using the Anaconda Powershell Prompt. You can launch this by searching for "Anaconda Powershell" in the start menu, or by launching Anaconda Navigator and looking for "Powershell Prompt" in the home screen.
 
@@ -95,7 +122,7 @@ See below for steps to install and run the ECODATA-Prepare apps. For **Mac/Linux
 The apps are still under development, and installation will be simplified soon!
 ```
 
-### Installing Anaconda
+#### Installing Anaconda
 
 1. Anaconda Distribution is an free, open-source distribution platform for managing and deploying Python and R packages. Install Anaconda if you do not have it on your computer. [Download the installer here](https://www.anaconda.com/products/distribution) and then run the file to install the program.
 
@@ -105,7 +132,7 @@ The apps are still under development, and installation will be simplified soon!
     conda install conda=4.14
     ```
 
-### Preparing the Python environment and installing ECODATA-Prepare
+#### Preparing the Python environment and installing ECODATA-Prepare
 
 3. [Download the conda environment file here](../../environment-clean-build.yml). This file specifies the Python package requirements used by the apps, and can be deleted following installation.
 
@@ -166,3 +193,31 @@ If your directory has many files, replace "ls" with "ls -lt" to sort files by th
     ```
 
 After the installation is complete, you can [get started](https://ecodata-apps.readthedocs.io/en/latest/user_guide/index.html#).
+
+#### Launch using Anaconda
+
+If you have [installed Anadonda](https://ecodata-apps.readthedocs.io/en/latest/installation.html#install-using-anaconda-alternative-method) (Anaconda PowerShell for Windows, Anaconda Navigator for Mac), you can also launch ECODATA-Prepare through this program.
+
+To launch in Windows,
+
+- Open Anaconda PowerShell.
+- Copy-paste the below code into the prompt window, and press Enter:
+
+```bash
+conda activate eco
+python -m ecodata.app
+```
+
+To launch on Mac,
+
+- Open Anaconda Navigator.
+- Select Environments from the upper left and navigate to "ecodata".
+
+![anaconda_navigator](./images/anaconda_navigator.png)
+
+- Hit the play button and select "Open Terminal".
+- A Terminal window will open. Enter the following and hit Return:
+
+```bash
+python -m ecodata.app
+```
