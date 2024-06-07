@@ -1,0 +1,25 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: ECODATA
+message: >-
+  If you use this software, please cite it as below.
+type: software
+authors:
+  - given-names: Justine
+    family-names: Missik
+    email: missik.2@osu.edu
+    orcid: 'https://orcid.org/0000-0002-6448-0694'
+  - given-names: Madeline
+    family-names: Scyphers
+    orcid: 'https://orcid.org/0000-0003-3733-4330'
+  - given-names: Sarah
+    family-names: Davidson
+    orcid: 'https://orcid.org/0000-0002-2766-9201'
+  - given-names: Gil
+    family-names: Bohrer
+    orcid: 'https://orcid.org/0000-0002-9209-9540'
+repository-code: 'https://github.com/jemissik/ecodata'
+url: 'https://ecodata-apps.readthedocs.io/'
+license: MIT
