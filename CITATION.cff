@@ -22,4 +22,5 @@ authors:
     orcid: 'https://orcid.org/0000-0002-9209-9540'
 repository-code: 'https://github.com/jemissik/ecodata'
 url: 'https://ecodata-apps.readthedocs.io/'
+doi: '10.5281/zenodo.11522464'
 license: MIT
