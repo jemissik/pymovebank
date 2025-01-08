@@ -8,6 +8,44 @@ Check out this [simple guide for using git](https://rogerdudler.github.io/git-gu
 3. [Open a pull request](https://github.com/jemissik/ecodata/pulls) to merge changes from your branch into the
 repository's ``develop`` branch.
 
+## Developer installation
+
+1. Install conda. We suggest installing either Miniforge or Miniconda. [See here for installation instructions](https://docs.conda.io/projects/conda/en/stable/).
+
+```{note}
+***For Windows***: Use the command prompt that was installed with conda for the next steps. (It will be called "Anaconda Prompt" or "Miniforge Prompt".)
+```
+
+```{note}
+If you have an existing conda installation, it's strongly recommended to make sure you are using the libmamba solver. [See here for additional information.](https://docs.conda.io/projects/conda/en/stable/release-notes.html#with-this-23-10-0-release-we-are-changing-the-default-solver-of-conda-to-conda-libmamba-solver)
+```
+2. Clone the repository: https://github.com/jemissik/ecodata
+3. Navigate to the root directory of the cloned repo.
+4. Create the conda environment for the package:
+
+    ```
+    conda env create --file ecodata-env.yml --name eco-dev
+    ```
+
+5. Install the additional dev requirements (needed for docs, testing, code style, etc), and install the package in editable mode:
+
+    ```
+    conda env update --name eco-dev --file ecodata-dev-env.yml
+    ```
+
+### Launching the apps
+
+To activate the `eco-dev` environment, run:
+
+```
+conda activate eco-dev
+```
+
+To launch the apps, run:
+
+```
+python -m ecodata.app
+```
 
 ## Documentation
 
@@ -26,23 +64,3 @@ You may have to click "Show details" next to where it says "All checks have pass
 
 ### Versions of the docs
 - Read the Docs builds multiple versions of the documentation (for different branches of the repository). In the bottom corner of the docs pages, there is a box indicating which version you are viewing. You can click on that box to pick a different version.
-
-
-### Developer installation
-
-1. Clone the repository, and navigate to the root directory of the cloned repo
-2. Create the environment for the package:
-
-    ```
-    mamba env create --file ecodata-env.yml --name eco-dev
-    ```
-3. Activate the `eco-dev` environment (this will install the package in editable mode):
-
-    ```
-    mamba activate eco-dev
-    ```
-4. With the `eco-dev` environment activated, install the additional dev requirements (needed for docs, testing, code style, etc):
-
-    ```
-    mamba env update --name eco-dev --file ecodata-dev-env.yml
-    ```
